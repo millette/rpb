@@ -11,7 +11,8 @@
   },
   "license": "AGPL-3.0",
   "scripts": {
-    "build": "parcel build --no-source-maps --experimental-scope-hoisting --public-url ./ index.html",
+    "build666": "parcel build --no-source-maps --experimental-scope-hoisting --public-url ./ index.html",
+    "build": "parcel build --no-source-maps --public-url ./ index.html",
     "clean": "rm -fr .cache dist",
     "start": "CHOKIDAR_USEPOLLING=yes parcel index.html # workaround https://github.com/parcel-bundler/parcel/issues/1743#issuecomment-441278085"
   },

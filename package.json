@@ -1,13 +1,14 @@
 {
   "name": "rpb",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "version": "0.0.0",
+  "author": {
+    "name": "Robin Millette",
+    "email": "robin@millette.info",
+    "url": "http://robin.millette.info"
   },
-  "keywords": [],
-  "author": "",
+  "engines": {
+    "node": ">= 10"
+  },
   "license": "AGPL-3.0",
   "dependencies": {
     "pouchdb-adapter-memory": "^7.0.0",

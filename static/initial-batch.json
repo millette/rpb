@@ -1,8 +1,10 @@
 [
   {
-    "name": "bob"
+    "name": "bob",
+    "_id": "37e227b9-09f6-4ff6-b594-ce3af4c35580"
   },
   {
-    "name": "joe"
+    "name": "joe",
+    "_id": "5b0db5b1-3107-4da5-a4e0-26b72ff6b0e6"
   }
 ]

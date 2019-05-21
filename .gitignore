@@ -2,3 +2,4 @@ node_modules
 rpb.code-workspace
 .cache
 dist
+dist-*/

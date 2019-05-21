@@ -1,11 +1,12 @@
 // npm
 import PouchDB from 'pouchdb-core'
-import memory from 'pouchdb-adapter-memory'
+import idb from 'pouchdb-adapter-idb'
 
-PouchDB.plugin(memory)
+PouchDB.plugin(idb)
 
+const adapter = 'idb'
 const UI_TIMEOUT = 50
-const db = new PouchDB('mydb', { adapter: 'memory' })
+const db = new PouchDB('mydb', { adapter })
 
 // dom utils
 const mainEl = document.querySelector('main')

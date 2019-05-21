@@ -115,8 +115,17 @@ const makeDetails = (doc) => {
     }
   }))
 
-  $add(buttonsEl, $el('button', 'b2'))
-  $add(buttonsEl, $el('button', 'b3'))
+  if (Object.keys(doc).length) $add(buttonsEl, $el('button', {
+    innerText: 'delete',
+    onclick: (ev) => {
+      ev.preventDefault()
+      setMessage(`DELETED ${doc._id}`)
+      db.remove(doc)
+        .then(all)
+        .then(makeDomDocs)
+    }
+  }))
+
   return $add(divEl, buttonsEl)
 }
 

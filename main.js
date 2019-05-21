@@ -1,22 +1,8 @@
 // npm
 import PouchDB from 'pouchdb-browser'
-/*
-import PouchDB from 'pouchdb-core'
-import idb from 'pouchdb-adapter-idb'
-import mapreduce from "pouchdb-mapreduce"
-import http from "pouchdb-adapter-http"
-import replication from "pouchdb-replication"
 
-PouchDB
-  .plugin(idb)
-  .plugin(mapreduce)
-  .plugin(http)
-  .plugin(replication)
-*/
-
-const adapter = 'idb'
 const UI_TIMEOUT = 50
-const db = new PouchDB('mydb', { adapter })
+const db = new PouchDB('mydb')
 
 // dom utils
 const mainEl = document.querySelector('main')

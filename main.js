@@ -1,5 +1,8 @@
 // npm
 import PouchDB from 'pouchdb-browser'
+import allDBs from 'pouchdb-all-dbs'
+
+allDBs(PouchDB)
 
 // constants
 const UI_TIMEOUT = 50
@@ -227,6 +230,7 @@ const makeNav = () => {
 const domStuff = (rows) => {
   appendToMain(makeDomDocs(rows))
   appendToMain(makeNav())
+  return PouchDB.allDbs().then((dbs) => `Available DBs: ${dbs.join(', ')}`)
 }
 
 const init = () => fetch('/initial-batch.json')

@@ -1,5 +1,5 @@
 import { $el } from "./dom.js"
-import { all } from "./misc.js"
+import { all } from "./db.js"
 
 const download = function(withRevs, { rows }) {
   const mdoc = withRevs

@@ -1,12 +1,9 @@
-import PouchDB from "./db.js"
+import PouchDB, { all } from "./db.js"
 import { setMessage, $el, $add, appendToMain } from "./dom.js"
 import makeDownload from "./download.js"
 
 // constants
 const UI_TIMEOUT = 50
-
-// pouchdb utils
-const all = (DB) => DB.allDocs({ include_docs: true })
 
 const asEdit = (DB, pre, doc) => {
   const ta = $el("textarea", {
@@ -199,4 +196,4 @@ const makeNav = (DB) => {
   return div
 }
 
-export { all, domStuff, makeDomDocs }
+export default domStuff

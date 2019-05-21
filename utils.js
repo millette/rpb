@@ -1,14 +1,11 @@
 // self
-import PouchDB from "./db.js"
-// import { setMessage, $el, $add, appendToMain } from "./dom.js"
+import PouchDB, { all } from "./db.js"
 import { setMessage } from "./dom.js"
-import { all, domStuff } from "./misc.js"
+import domStuff from "./misc.js"
 
 // globals
 const DBNAME = "oy" //  // mydb
 const DB = new PouchDB(DBNAME)
-
-// console.log('DB-keys', DB.name, Object.keys(DB))
 
 const init = () =>
   window

@@ -1,4 +1,6 @@
 // npm
+import PouchDB from 'pouchdb-browser'
+/*
 import PouchDB from 'pouchdb-core'
 import idb from 'pouchdb-adapter-idb'
 import mapreduce from "pouchdb-mapreduce"
@@ -10,6 +12,7 @@ PouchDB
   .plugin(mapreduce)
   .plugin(http)
   .plugin(replication)
+*/
 
 const adapter = 'idb'
 const UI_TIMEOUT = 50

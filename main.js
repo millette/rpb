@@ -2,8 +2,9 @@
 import PouchDB from 'pouchdb-core'
 import memory from 'pouchdb-adapter-memory'
 import idb from 'pouchdb-adapter-idb'
+import mapreduce from "pouchdb-mapreduce"
 
-PouchDB.plugin(idb).plugin(memory)
+PouchDB.plugin(idb).plugin(memory).plugin(mapreduce)
 
 const adapter = 'idb'
 const UI_TIMEOUT = 50

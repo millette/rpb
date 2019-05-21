@@ -1,6 +1,5 @@
 // npm
 import PouchDB from 'pouchdb-core'
-import memory from 'pouchdb-adapter-memory'
 import idb from 'pouchdb-adapter-idb'
 import mapreduce from "pouchdb-mapreduce"
 import http from "pouchdb-adapter-http"
@@ -8,7 +7,6 @@ import replication from "pouchdb-replication"
 
 PouchDB
   .plugin(idb)
-  .plugin(memory)
   .plugin(mapreduce)
   .plugin(http)
   .plugin(replication)

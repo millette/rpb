@@ -1,22 +1,27 @@
 // npm
 import PouchDB from 'pouchdb-browser'
 
-const adapter = 'idb'
+// constants
 const UI_TIMEOUT = 50
-const db = new PouchDB('mydb', { adapter })
+
+// globals
+const db = new PouchDB('mydb')
 
 // dom utils
 const mainEl = document.querySelector('main')
-const errorEl = mainEl.querySelector('#error-message')
-let errorTimer
 
-const setMessage = (msg, ms = 5000) => {
-  errorEl.innerText = msg || ''
-  if (msg && ms) {
-    clearTimeout(errorTimer)
-    errorTimer = setTimeout(setMessage, ms)
+const setMessage = (() => {
+  const errorEl = mainEl.querySelector('#error-message')
+  let errorTimer
+
+  return (msg, ms = 5000) => {
+    errorEl.innerText = msg || ''
+    if (msg && ms) {
+      clearTimeout(errorTimer)
+      errorTimer = setTimeout(setMessage, ms)
+    }
   }
-}
+})()
 
 const $el = (tag, attr) => {
   const el = document.createElement(tag)
@@ -72,12 +77,9 @@ const asEdit = (pre, doc) => {
               URL.revokeObjectURL(href)
             })
           if (p1 && !p1.ok) throw new Error('Put/Post error.')
-          // errorEl.innerText = 'Saved'
           setMessage('Saved')
         })
     } catch (e) {
-      console.error('OUILLE', e)
-      // errorEl.innerText = e.message
       setMessage(e.message)
     }
   }
@@ -196,7 +198,6 @@ const makeNav = () => {
 const domStuff = (rows) => {
   appendToMain(makeDomDocs(rows))
   appendToMain(makeNav())
-  return 'All DOM!'
 }
 
 const init = () => fetch('/initial-batch.json')
@@ -206,13 +207,5 @@ const init = () => fetch('/initial-batch.json')
   .then(domStuff)
 
 init()
-  .then((x) => {
-    console.log(x)
-    // errorEl.innerText = ''
-    setMessage()
-  })
-  .catch((e) => {
-    console.error('KARAMBA', e)
-    // errorEl.innerText = e.message
-    setMessage(e.message)
-  })
+  .then(setMessage)
+  .catch(setMessage)

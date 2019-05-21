@@ -18,6 +18,7 @@
   },
   "dependencies": {
     "pouchdb-adapter-idb": "^7.0.0",
+    "pouchdb-adapter-memory": "^7.0.0",
     "pouchdb-core": "^7.0.0"
   },
   "devDependencies": {

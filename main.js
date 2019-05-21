@@ -9,6 +9,17 @@ const db = new PouchDB('mydb', { adapter: 'memory' })
 
 // dom utils
 const mainEl = document.querySelector('main')
+const errorEl = mainEl.querySelector('#error-message')
+let errorTimer
+
+const setMessage = (msg, ms = 5000) => {
+  errorEl.innerText = msg || ''
+  if (msg && ms) {
+    clearTimeout(errorTimer)
+    errorTimer = setTimeout(setMessage, ms)
+  }
+}
+
 const $el = (tag, attr) => {
   const el = document.createElement(tag)
   if (!attr) return el
@@ -28,41 +39,49 @@ const all = () => db.allDocs({ include_docs: true })
 const asEdit = (pre, doc) => {
   const ta = $el('textarea', { rows: 10, innerHTML: JSON.stringify(doc, null, '  ') })
   ta.onkeydown = (ev) => {
-    if (!(ev.ctrlKey && (ev.code === 'Enter'))) return
-    const nDoc = JSON.parse(ev.target.value)
-    if (nDoc._rev !== doc._rev) throw new Error('Do not modify the _rev field manually.')
+    try {
+      if (!(ev.ctrlKey && (ev.code === 'Enter'))) return
+      const nDoc = JSON.parse(ev.target.value)
+      if (nDoc._rev !== doc._rev) throw new Error('Do not modify the _rev field manually.')
 
-    let willDelete
-    const method = nDoc._id ? 'put' : 'post'
+      let willDelete
+      const method = nDoc._id ? 'put' : 'post'
 
-    if (doc._id && (nDoc._id !== doc._id)) {
-      const buzz = confirm('Are you sure you want to create a new document by changing its id field?')
-      if (!buzz) throw new Error('Cancelled after id field change.')
-      const buzz2 = confirm('Also remove the original document?')
-      delete nDoc._rev
-      willDelete = buzz2
+      if (doc._id && (nDoc._id !== doc._id)) {
+        const buzz = confirm('Are you sure you want to create a new document by changing its id field?')
+        if (!buzz) throw new Error('Cancelled after id field change.')
+        const buzz2 = confirm('Also remove the original document?')
+        delete nDoc._rev
+        willDelete = buzz2
+      }
+      const p = [db[method](nDoc)]
+      if (willDelete) p.push(db.remove(doc))
+      Promise.all(p)
+        .then(([p0, p1]) => {
+          if (!p0.ok) throw new Error('Put/Post error.')
+
+          doc = {
+            ...nDoc,
+            _id: p0.id,
+            _rev: p0.rev
+          }
+          pre.innerText = JSON.stringify(doc, null, '  ')
+          document.querySelectorAll('#exports > li > a')
+            .forEach((el) => {
+              const { pathname, href } = el
+              if (pathname) return
+              el.href = '#'
+              URL.revokeObjectURL(href)
+            })
+          if (p1 && !p1.ok) throw new Error('Put/Post error.')
+          // errorEl.innerText = 'Saved'
+          setMessage('Saved')
+        })
+    } catch (e) {
+      console.error('OUILLE', e)
+      // errorEl.innerText = e.message
+      setMessage(e.message)
     }
-    const p = [db[method](nDoc)]
-    if (willDelete) p.push(db.remove(doc))
-    Promise.all(p)
-      .then(([p0, p1]) => {
-        if (!p0.ok) throw new Error('Put/Post error.')
-
-        doc = {
-          ...nDoc,
-          _id: p0.id,
-          _rev: p0.rev
-        }
-        pre.innerText = JSON.stringify(doc, null, '  ')
-        document.querySelectorAll('#exports > li > a')
-          .forEach((el) => {
-            const { pathname, href } = el
-            if (pathname) return
-            el.href = '#'
-            URL.revokeObjectURL(href)
-          })
-        if (p1 && !p1.ok) throw new Error('Put/Post error.')
-      })
   }
   pre.innerText = ''
   $add(pre, ta)
@@ -191,7 +210,11 @@ const init = () => fetch('/initial-batch.json')
 init()
   .then((x) => {
     console.log(x)
+    // errorEl.innerText = ''
+    setMessage()
   })
   .catch((e) => {
-    console.error(e)
+    console.error('KARAMBA', e)
+    // errorEl.innerText = e.message
+    setMessage(e.message)
   })

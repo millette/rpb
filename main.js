@@ -5,7 +5,8 @@ import PouchDB from 'pouchdb-browser'
 const UI_TIMEOUT = 50
 
 // globals
-const db = new PouchDB('mydb')
+const DBNAME = 'oy' //  // mydb
+const DB = new PouchDB(DBNAME)
 
 // dom utils
 const mainEl = document.querySelector('main')
@@ -37,7 +38,7 @@ const $add = (p, c) => p.appendChild(c) && p
 const appendToMain = (c) => $add(mainEl, c)
 
 // pouchdb utils
-const all = () => db.allDocs({ include_docs: true })
+const all = () => DB.allDocs({ include_docs: true })
 
 const asEdit = (pre, doc) => {
   const ta = $el('textarea', { rows: 10, innerHTML: JSON.stringify(doc, null, '  ') })
@@ -57,8 +58,8 @@ const asEdit = (pre, doc) => {
         delete nDoc._rev
         willDelete = buzz2
       }
-      const p = [db[method](nDoc)]
-      if (willDelete) p.push(db.remove(doc))
+      const p = [DB[method](nDoc)]
+      if (willDelete) p.push(DB.remove(doc))
       Promise.all(p)
         .then(([p0, p1]) => {
           if (!p0.ok) throw new Error('Put/Post error.')
@@ -120,7 +121,7 @@ const makeDetails = (doc) => {
     onclick: (ev) => {
       ev.preventDefault()
       setMessage(`DELETED ${doc._id}`)
-      db.remove(doc)
+      DB.remove(doc)
         .then(all)
         .then(makeDomDocs)
     }
@@ -191,8 +192,27 @@ const makeNav = () => {
     }
   })
 
+  const but3 = $el('button', {
+    innerText: 'Sync',
+    onclick: (ev) => {
+      ev.preventDefault()
+      const dbName = prompt('DB name:')
+      if (!dbName) return setMessage('Not synced, no db name given.')
+      if (DBNAME === dbName) return setMessage('Cannot sync to itself.')
+      const db2 = new PouchDB(dbName)
+      PouchDB.sync(DB, db2)
+        .then((x) => {
+          setMessage(`Synced with ${dbName}: ${JSON.stringify(x)}`)
+          return all()
+        })
+        .then(makeDomDocs)
+        .catch(setMessage)
+    }
+  })
+
   $add(more, but)
   $add(more, but2)
+  $add(more, but3)
 
   const nav = $el('ul', { id: 'exports' })
   const navA = $el('li')
@@ -211,7 +231,7 @@ const domStuff = (rows) => {
 
 const init = () => fetch('/initial-batch.json')
   .then((res) => res.json())
-  .then(db.bulkDocs)
+  .then(DB.bulkDocs)
   .then(all)
   .then(domStuff)
 

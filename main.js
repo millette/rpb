@@ -1,8 +1,9 @@
 // npm
 import PouchDB from 'pouchdb-core'
+import memory from 'pouchdb-adapter-memory'
 import idb from 'pouchdb-adapter-idb'
 
-PouchDB.plugin(idb)
+PouchDB.plugin(idb).plugin(memory)
 
 const adapter = 'idb'
 const UI_TIMEOUT = 50

@@ -13,6 +13,7 @@
   "scripts": {
     "build": "healthier && parcel build --no-source-maps --public-url ./ index.html",
     "clean": "rm -fr .cache dist",
+    "deploy": "npm run clean && npm run build && gh-pages -d dist",
     "start": "CHOKIDAR_USEPOLLING=yes parcel index.html # workaround https://github.com/parcel-bundler/parcel/issues/1743#issuecomment-441278085",
     "test": "healthier"
   },
@@ -22,6 +23,7 @@
   },
   "devDependencies": {
     "acorn": "^6.1.1",
+    "gh-pages": "^2.0.1",
     "healthier": "^2.0.0",
     "husky": "^2.3.0",
     "lint-staged": "^8.1.7",

@@ -19,13 +19,29 @@
       integrity="sha256-a4zpugsKZqeQuXHZob2UNRXchaLIJRFdXCdi11HgAKY="
       crossorigin="anonymous"
     />
+    <style>
+      #error-message {
+        padding: 2rem;
+        border: thin dotted black;
+        background: yellowgreen;
+      }
+      #error-message:empty {
+        border: none;
+        padding: 0;
+      }
+    </style>
   </head>
   <body>
     <section class="section">
       <main class="container">
         <p>Hello world!</p>
-        <div id="error-message">Loading...</div>
+        <div id="app-action"></div>
       </main>
+    </section>
+    <section class="section">
+      <div class="container">
+        <div id="error-message">Loading...</div>
+      </div>
     </section>
 
     <footer class="footer">

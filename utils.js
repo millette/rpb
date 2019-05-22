@@ -9,7 +9,7 @@ const DB = new PouchDB(DBNAME)
 
 const init = () =>
   window
-    .fetch("/initial-batch.json")
+    .fetch("initial-batch.json")
     .then((res) => res.json())
     .then(DB.bulkDocs)
     .then(all.bind(this, DB))

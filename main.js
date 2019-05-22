@@ -1,5 +1,5 @@
 // self
-import { init, setMessage } from "./utils.js"
+import { init, setMessage } from "./lib/utils.js"
 
 init()
   .then(setMessage)

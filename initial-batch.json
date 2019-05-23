@@ -1,10 +1,21 @@
 [
   {
-    "name": "bob",
-    "_id": "37e227b9-09f6-4ff6-b594-ce3af4c35580"
+    "_id": "no-auto-id",
+    "name": "no-auto-id",
+    "info": "_id will be set automatically to a random string if it's not set."
   },
   {
-    "name": "joe",
-    "_id": "5b0db5b1-3107-4da5-a4e0-26b72ff6b0e6"
+    "name": "with-id",
+    "_id": "with-id"
+  },
+  {
+    "_id": "no-name"
+  },
+  {
+    "_id": "info",
+    "name": "info",
+    "fieldNames": "Can be any valid JS Object field name.",
+    "fieldValues": "Can be any value represented with valid JSON.",
+    "info": "All fields are optional; fields starting with _ are reserved (_id, _rev, _deleted, etc.)."
   }
 ]

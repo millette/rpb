@@ -1,6 +1,7 @@
 {
   "name": "rpb",
   "version": "0.0.0",
+  "description": "PouchDB demo with local storage (built with Parcel)",
   "author": {
     "name": "Robin Millette",
     "email": "robin@millette.info",
@@ -32,7 +33,7 @@
     "prettier": "^1.17.1"
   },
   "lint-staged": {
-    "*.{html,js,json,md,mdx}": [
+    "*.{html,js,json,md}": [
       "prettier --write",
       "git add"
     ]

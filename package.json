@@ -24,12 +24,12 @@
   },
   "devDependencies": {
     "acorn": "^6.1.1",
-    "gh-pages": "^2.0.1",
-    "healthier": "^2.0.0",
-    "husky": "^2.4.0",
-    "lint-staged": "^8.2.0",
+    "gh-pages": "^2.1.1",
+    "healthier": "^3.0.2",
+    "husky": "2.7.0",
+    "lint-staged": "^9.2.5",
     "parcel-bundler": "^1.12.3",
-    "parcel-plugin-static-files-copy": "^2.1.2",
+    "parcel-plugin-static-files-copy": "^2.2.1",
     "prettier": "^1.18.2"
   },
   "lint-staged": {

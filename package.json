@@ -20,7 +20,7 @@
   },
   "dependencies": {
     "pouchdb-all-dbs": "^1.0.2",
-    "pouchdb-browser": "^7.0.0"
+    "pouchdb-browser": "^7.1.1"
   },
   "devDependencies": {
     "acorn": "^6.1.1",
